@@ -1,6 +1,8 @@
 #include <SPI.h>
 #include <GD.h>
 
+#include "alien_sprite.h"
+
 byte sprite_page = 0;
 
 struct sprite {
