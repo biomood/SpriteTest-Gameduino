@@ -2,10 +2,28 @@
 #include <GD.h>
 #include "alien_sprite.h"
 
+struct sprite {
+    int no;
+    int x;
+    int y;
+    int anim;
+    byte image[2];
+    byte rot;
+};
+struct sprite spr;
 
 void setup() {
     // allow for setup
     delay(250);
+    
+    // init struct
+    spr.no = 0;
+    spr.x = 100;
+    spr.y = 100;
+    spr.anim = 0;
+    spr.image[0] = 0;
+    spr.image[1] = 1;
+    spr.rot = 0;
     
     GD.begin();
     
@@ -27,15 +45,14 @@ void setup() {
     // pixel with value of 3 will be transparent
     GD.wr16(PALETTE4A + (3<<1), TRANSPARENT);
     
-    // copy the sprite image into RAM
+    // copy the sprite images into RAM
     GD.copy(RAM_SPRIMG, alien_sprite_img, sizeof(alien_sprite_img));
-    
-    // set the sprite control word
-    GD.sprite(0, 100, 100, 0, 8);
+    GD.copy(RAM_SPRIMG+256, alien_sprite_img2, sizeof(alien_sprite_img2));
 }
 
 
 void loop() {
-    
+    // set the sprite control word
+    GD.sprite(spr.no, spr.x, spr.y, spr.image[spr.anim], 8);
 }
 
